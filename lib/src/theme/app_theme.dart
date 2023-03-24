@@ -11,6 +11,8 @@ const pageTransitionsTheme = PageTransitionsTheme(
   },
 );
 
+
+
 class AppTheme {
   ThemeData appTheme = ThemeData(
     useMaterial3: true,
@@ -23,7 +25,7 @@ class AppTheme {
     fontFamily: "Mulish",
     appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: secondaryAccent,
+          statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light,
           // For Android (dark icons)
           statusBarBrightness: Brightness.dark, // For iOS (dark icons)
@@ -41,7 +43,7 @@ class AppTheme {
             color: Colors.black87,
             fontFamily: "Mulish"),
         labelSmall: TextStyle(
-          fontSize: 14,
+          fontSize: 13,
           fontWeight: FontWeight.w800,
           fontFamily: "Mulish"
         ),
@@ -82,7 +84,7 @@ class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
-            textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 16)),
+            textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 13)),
             elevation: MaterialStateProperty.all(0.0),
             side: MaterialStateProperty.all(
                 const BorderSide(color: Colors.transparent)))),
@@ -98,8 +100,13 @@ class AppTheme {
             insets: EdgeInsets.symmetric(horizontal: 1.0, vertical: 0.0))),
     chipTheme: const ChipThemeData(
         showCheckmark: false,
+        checkmarkColor: Colors.white,
         selectedColor: primaryColor,
         padding: EdgeInsets.all(15),
+        labelStyle: TextStyle(
+          fontFamily: "Mulish",
+          fontSize: 13,
+        ),
         surfaceTintColor: Color(0xffF8FAFD)),
     scaffoldBackgroundColor: const Color(0xffF8FAFD),
   );

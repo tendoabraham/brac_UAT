@@ -25,8 +25,8 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
 
-    //TODO: Comment out before sharing
-    _sharedPref.addActivationData("256757964471", "8082316600");
+    //TODO: Comment out activation data before sharing
+    // _sharedPref.addActivationData("256757964471", "8082316600");
     // _sharedPref.addActivationData("256783657395", "1722542461");
     checkIsActivated();
     // SystemChrome.setEnabledSystemUIOverlays([]);
@@ -47,33 +47,45 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
-  Widget build(BuildContext context) => BaseScreen(
-    child: Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/bk.png'),
-            fit: BoxFit.cover,
-            alignment: Alignment.topCenter
-        ),
-      ),
-      child: ListView(
-        padding:  const EdgeInsets.symmetric(horizontal: 12),
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+
+    return Scaffold(
+      body: Stack(
         children: [
-          const SizedBox(
-            height: 32,
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bk.png'),
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+              ),
+            ),
           ),
-          const SizedBox(
-            height: 18,
+          SafeArea(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              children: [
+                const SizedBox(
+                  height: 32,
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Header(isActivated: isActivated),
+                const SizedBox(
+                  height: 18,
+                ),
+                Powered(),
+              ],
+            ),
           ),
-          Header(isActivated: isActivated,),
-          const SizedBox(
-            height: 18,
-          ),
-          Powered()
         ],
       ),
-    ),
-  );
+    );
+  }
 }
 
 class Header extends StatelessWidget {
@@ -152,9 +164,9 @@ class Header extends StatelessWidget {
                             context: context, widget: const LoginScreen());
                       }else{
                         CommonUtils.navigateToRoute(
-                            //TODO: update to commented line
-                            // context: context, widget: const ActivationScreen());
-                      context: context, widget: const LoginScreen());
+                            //TODO: update to activation
+                            context: context, widget: const ActivationScreen());
+                      // context: context, widget: const LoginScreen());
                       }
                     },
                     child: const Text('Login'),

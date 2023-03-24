@@ -1,3 +1,5 @@
+import 'package:brac_mobile/src/home/LastCrDrLoading.dart';
+import 'package:brac_mobile/src/other/home_load.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:craft_dynamic/dynamic_widget.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +79,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     String name = '$firstName $lastName';
 
-    return  BaseScreen(
+    return  WillPopScope(
+        onWillPop: () async {
+            return AlertUtil.showAlertDialog(context, "Would you like to logout",
+                        isConfirm: true)
+                    .then((value) {
+                  if (value) {
+                    Navigator.of(context).pop();
+                  }
+                }) ??
+                false;
+    },
+    child: BaseScreen(
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -92,13 +105,13 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 30,
             ),
             Text(greeting,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: "Mulish",
-              color: Colors.white,
-              fontSize: 15,
-              fontWeight: FontWeight.bold
-            ),),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontFamily: "Mulish",
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold
+              ),),
             Text(name,
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -121,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(
                     fontFamily: "Mulish",
                     fontSize: 13,
-                  fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold
                 ),),
             ),
             const SizedBox(
@@ -131,82 +144,30 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 12,
             ),
-            // Padding(padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            // child: ElevatedButton(
-            //   style: ButtonStyle(
-            //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            //         RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(30),
-            //             side: const BorderSide(color: Color.fromRGBO(138, 29, 92, 1)))),
-            //     backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(138, 29, 92, 1)),
-            //   ),
-            //   onPressed: () {
-            //     AlertUtil.showAlertDialog(context, "Proceed to logout?",
-            //         isConfirm: true)
-            //         .then((value) {
-            //       if (value) {
-            //         Navigator.of(context).pop();
-            //       }
-            //     });
-            //   },
-            //   child: const Text('Logout'),
-            // ),)
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          side: const BorderSide(color: Color.fromRGBO(138, 29, 92, 1)))),
+                  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(138, 29, 92, 1)),
+                ),
+                onPressed: () {
+                  AlertUtil.showAlertDialog(context, "Proceed to logout?",
+                      isConfirm: true)
+                      .then((value) {
+                    if (value) {
+                      Navigator.of(context).pop();
+                    }
+                  });
+                },
+                child: const Text('Logout'),
+              ),)
           ],
         )
-        ,),);
+        ,),),);
   }
-
-
-  // @override
-  // Widget build(BuildContext context) => WillPopScope(
-  //     onWillPop: () async {
-  //       return AlertUtil.showAlertDialog(context, "Would you like to logout",
-  //                   isConfirm: true)
-  //               .then((value) {
-  //             if (value) {
-  //               Navigator.of(context).pop();
-  //             }
-  //           }) ??
-  //           false;
-  //     },
-  //     child: BaseScreen(
-  //         child: Container(
-  //           decoration: const BoxDecoration(
-  //             image: DecorationImage(
-  //                 image: AssetImage('assets/images/bk.png'),
-  //                 fit: BoxFit.cover,
-  //                 alignment: Alignment.topCenter
-  //             ),
-  //           ),
-  //           child: ListView(
-  //             children: [
-  //               const SizedBox(
-  //                 height: 12,
-  //               ),
-  //               Center(
-  //                   child: Label(
-  //                     text: "Accounts",
-  //                     fontSize: 12,
-  //                   )),
-  //               Center(
-  //                   child: Label(
-  //                     text: "Accounts",
-  //                     fontSize: 12,
-  //                   )),
-  //               AccountWidget(),
-  //               const SizedBox(
-  //                 height: 12,
-  //               ),
-  //               Padding(
-  //                   padding: const EdgeInsets.symmetric(horizontal: 14),
-  //                   child: Label(
-  //                     text: "Features",
-  //                     fontSize: 18,
-  //                   )),
-  //               MainModules()
-  //             ],
-  //           )
-  //         ,),));
 }
 
 class MainModules extends StatelessWidget {
@@ -220,7 +181,7 @@ class MainModules extends StatelessWidget {
         builder:
             (BuildContext context, AsyncSnapshot<List<ModuleItem>> snapshot) {
           Widget child = Center(
-            child: LoadUtil(),
+            child: HomeLoad(child: const LastCrDrLoading(),),
           );
           if (snapshot.hasData) {
             var moduleItems = snapshot.data;
@@ -229,13 +190,6 @@ class MainModules extends StatelessWidget {
             );
             if (moduleItems != null && moduleItems.isNotEmpty) {
               child =
-                  // Card(
-                  // elevation: 12,
-                  // surfaceTintColor: Colors.white,
-                  // shape: const RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.all(
-                  //         Radius.circular(12.0))),
-                  // child:
                   GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
