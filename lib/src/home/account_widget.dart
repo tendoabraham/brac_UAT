@@ -1,6 +1,9 @@
 import 'dart:ui';
 import 'package:blur/blur.dart';
+import 'package:brac_mobile/src/home/LastCrDrWidget.dart';
+import 'package:brac_mobile/src/home/account_card_load.dart';
 import 'package:brac_mobile/src/home/ministatement_screen.dart';
+import 'package:brac_mobile/src/other/home_load.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:craft_dynamic/database.dart';
 import 'package:craft_dynamic/dynamic_widget.dart';
@@ -29,8 +32,8 @@ class AccountWidgetState extends State<AccountWidget> {
       builder:
           (BuildContext context, AsyncSnapshot<List<BankAccount>> snapshot) {
         Widget child = SizedBox(
-          height: 200,
-          child: Center(child: LoadUtil()),
+          height: 180,
+          child: Center(child: HomeLoad(child: const AccountCardLoad(),)),
         );
         if (snapshot.hasData) {
           int? count = snapshot.data?.length;

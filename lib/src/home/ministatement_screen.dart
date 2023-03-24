@@ -33,25 +33,6 @@ class _MiniStatementScreenState extends State<MiniStatementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var dropdownPicks = widget.accounts
-    //     .fold<Map<String, dynamic>>(
-    //         {},
-    //         (acc, curr) => acc
-    //           ..[curr.bankAccountId] =
-    //               curr.aliasName.isEmpty ? curr.bankAccountId : curr.aliasName)
-    //     .entries
-    //     .map((item) => DropdownMenuItem(
-    //           value: item.key,
-    //           child: Text(
-    //             item.value,
-    //             style: Theme.of(context).textTheme.labelSmall,
-    //           ),
-    //         ))
-    //     .toList();
-    // dropdownPicks.toSet().toList();
-    // if (dropdownPicks.isNotEmpty) {
-    //   _currentValue = dropdownPicks[0].value;
-    // }
     return BaseScreen(
       child: Container(
           decoration: const BoxDecoration(
