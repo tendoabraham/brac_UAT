@@ -67,10 +67,11 @@ class _OTPVerificationState extends State<OTPVerification> with CodeAutoFill {
                 width: 50,),
             ),
             const SizedBox(
-              height: 12,
+              height: 36,
             ),
             Container(
               margin: const EdgeInsets.only(left: 20.0),
+              alignment: Alignment.centerLeft,
               child:                           Label(
                 text: "OTP",
                 fontSize: 24,
@@ -79,9 +80,10 @@ class _OTPVerificationState extends State<OTPVerification> with CodeAutoFill {
             ),
             Container(
               margin: const EdgeInsets.only(left: 20.0),
+              alignment: Alignment.centerLeft,
               child:                           Label(
                 text: "Please enter the One-Time Password\nsent to Your Mobile Number or Email",
-                fontSize: 12,
+                fontSize: 14,
               ),
             ),
             const SizedBox(

@@ -1,0 +1,149 @@
+// ignore_for_file: must_be_immutable
+import 'package:craft_dynamic/src/state/plugin_state.dart';
+import 'package:flutter/material.dart';
+import 'package:craft_dynamic/craft_dynamic.dart';
+import 'package:craft_dynamic/database.dart';
+import 'package:craft_dynamic/dynamic_widget.dart';
+import 'package:provider/provider.dart';
+
+class ModulesListWidget extends StatefulWidget {
+  final Orientation orientation;
+  final ModuleItem? moduleItem;
+  FrequentAccessedModule? favouriteModule;
+
+  ModulesListWidget({
+    super.key,
+    required this.orientation,
+    required this.moduleItem,
+    this.favouriteModule,
+  });
+
+  @override
+  State<ModulesListWidget> createState() => _ModulesListWidgetState();
+}
+
+class _ModulesListWidgetState extends State<ModulesListWidget> {
+  final _moduleRepository = ModuleRepository();
+
+  getModules() =>
+      _moduleRepository.getModulesById(widget.favouriteModule == null
+          ? widget.moduleItem!.moduleId
+          : widget.favouriteModule!.moduleID);
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+        onWillPop: () async {
+          Provider.of<PluginState>(context, listen: false)
+              .setRequestState(false);
+          return true;
+        },
+        child: Scaffold(
+          body: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/trx_bk.png'),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter
+              ),
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 35,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Image.asset(
+                        'assets/images/back2.png',
+                        height: 30,
+                        width: 30,
+                      ),
+                      Text("Home",
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: "Mulish",
+                            color: Colors.white
+                        ),),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(widget.moduleItem!.moduleName,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontFamily: "Mulish",
+                      color: Colors.white,
+                      fontSize: 30
+                  ),),
+                SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      //set border radius more than 50% of height and width to make circle
+                    ),
+                    elevation: 5,
+                    shadowColor: Colors.black,
+                    surfaceTintColor: Colors.white,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                      child: Text("Please choose one of the services below"),
+                    ),
+                  ),
+                ),
+                Expanded(child: FutureBuilder<List<ModuleItem>>(
+                    future: getModules(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<ModuleItem>> snapshot) {
+                      Widget child = const Center(child: Text("Please wait..."));
+                      if (snapshot.hasData) {
+                        var modules = snapshot.data?.toList();
+                        debugPrint("Modules....$modules");
+                        modules?.removeWhere((module) => module.isHidden == true);
+
+                        if (modules != null) {
+                          child = SizedBox(
+                              height: double.infinity,
+                              child: GridView.builder(
+                                // physics: const NeverScrollableScrollPhysics(),
+                                  padding: const EdgeInsets.only(
+                                      left: 12, right: 12, top: 8, bottom: 8),
+                                  shrinkWrap: true,
+                                  itemCount: modules.length,
+                                  gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      childAspectRatio: 16 / 18,
+                                      crossAxisCount: 3,
+                                      mainAxisSpacing: 1,
+                                      crossAxisSpacing: 1),
+                                  itemBuilder: (BuildContext context, int index) {
+                                    var module = modules[index];
+                                    return ModuleItemWidget(moduleItem: module);
+                                  }));
+                        }
+                      }
+                      return child;
+                    }))
+              ],
+            ),
+          ),
+        ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}

@@ -1,4 +1,6 @@
 import 'package:brac_mobile/src/auth/activation_screen.dart';
+import 'package:brac_mobile/src/other/branches.dart';
+import 'package:brac_mobile/src/other/contact_us.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -200,35 +202,47 @@ class Options extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/images/branch1.png',
-                        height: 30,
-                        width: 30,
-                      ),
-                      Label(
-                        text: "Branches",
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ],
-                  ),
+                  child: GestureDetector(
+                    onTap: (){
+                      CommonUtils.navigateToRoute(
+                          context: context, widget: Branches());
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset(
+                          'assets/images/branch1.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                        Label(
+                          text: "Branches",
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ],
+                    ),
+                  )
                 ),
                 Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset('assets/images/contactus.png',
-                        height: 30,
-                        width: 30,),
-                      Label(
-                        text: "Contact us",
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ],
+                  child: GestureDetector(
+                    onTap: (){
+                      CommonUtils.navigateToRoute(
+                          context: context, widget: const ContactUs());
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset('assets/images/contactus.png',
+                          height: 30,
+                          width: 30,),
+                        Label(
+                          text: "Contact us",
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ],
 
-                  ),
+                    ),
+                  )
                 ),
               ],
             )

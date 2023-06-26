@@ -25,7 +25,7 @@ class AppTheme {
     fontFamily: "Mulish",
     appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
+          statusBarColor: secondaryAccent,
           statusBarIconBrightness: Brightness.light,
           // For Android (dark icons)
           statusBarBrightness: Brightness.dark, // For iOS (dark icons)
