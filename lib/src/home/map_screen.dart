@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
-import 'package:craft_dynamic/database.dart';
 
 class MapView extends StatefulWidget {
   bool isAtms;

@@ -1,15 +1,14 @@
 import 'dart:ui';
 import 'package:blur/blur.dart';
-import 'package:brac_mobile/src/home/LastCrDrWidget.dart';
 import 'package:brac_mobile/src/home/account_card_load.dart';
 import 'package:brac_mobile/src/home/ministatement_screen.dart';
 import 'package:brac_mobile/src/other/home_load.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:craft_dynamic/database.dart';
-import 'package:craft_dynamic/dynamic_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:craft_dynamic/craft_dynamic.dart';
+
+import '../other/numberFormatter.dart';
 
 class AccountWidget extends StatefulWidget {
   @override
@@ -27,10 +26,10 @@ class AccountWidgetState extends State<AccountWidget> {
   int? currentIndex = 0;
 
   @override
-  Widget build(BuildContext context) => FutureBuilder<List<BankAccount>>(
+  Widget build(BuildContext context) => FutureBuilder<List<BankAccount>?>(
       future: getBankAccounts(),
       builder:
-          (BuildContext context, AsyncSnapshot<List<BankAccount>> snapshot) {
+          (BuildContext context, AsyncSnapshot<List<BankAccount>?> snapshot) {
         Widget child = SizedBox(
           height: 180,
           child: Center(child: HomeLoad(child: const AccountCardLoad(),)),
@@ -53,7 +52,7 @@ class AccountWidgetState extends State<AccountWidget> {
                             borderRadius: BorderRadius.circular(20.0),
                             //set border radius more than 50% of height and width to make circle
                           ),
-                          elevation: 5,
+                          elevation: 2,
                           shadowColor: Colors.black,
                           child: Container(
                             decoration: BoxDecoration(
@@ -120,7 +119,8 @@ class AccountCard extends StatefulWidget {
 class _AccountCardState extends State<AccountCard> {
   bool _isLoading = false;
   var _accountVisible = false;
-  var _balance = "Not available";
+  var _balance = "Not Available";
+  String bal = "";
   final _accountRepository = ProfileRepository();
 
 
@@ -130,6 +130,11 @@ class _AccountCardState extends State<AccountCard> {
 
     String bankAccountID = bankAccount.bankAccountId;
     String maskedNumber = "${bankAccountID.substring(0,1)}XXXXXXX${bankAccountID.substring(8)}";
+
+    String removeDecimalPointAndZeroes(String value) {
+      double parsedValue = double.tryParse(value) ?? 0.0;
+      return parsedValue.toInt().toString();
+    }
 
     return Center(
       child: Container(
@@ -194,11 +199,20 @@ class _AccountCardState extends State<AccountCard> {
                                 });
                                 if (value != null) {
                                   if (value.status == StatusCode.success.statusCode) {
-                                    _balance = value.resultsData
+
+                                    bal = value.resultsData
                                         ?.firstWhere(
-                                            (e) => e["ControlID"] == "BALTEXT")[                    "ControlValue"] ??
-                                        "Not available";
+                                            (e) => e["ControlID"] == "BALTEXT")[                    "ControlValue"] ;
+                                    String formatedBal = formatCurrency(removeDecimalPointAndZeroes(bal));
+                                    String wholeBal = formatedBal.split('.')[0];
+                                    _balance = "UGX $wholeBal";
+
+                                    // _balance = value.resultsData
+                                    //     ?.firstWhere(
+                                    //         (e) => e["ControlID"] == "BALTEXT")[                    "ControlValue"] ??
+                                    //     "Not available";
                                   } else {
+                                    _balance = "Not Available";
                                     AlertUtil.showAlertDialog(
                                         context, value.message ?? "Error");
                                   }
@@ -236,21 +250,17 @@ class _AccountCardState extends State<AccountCard> {
                             ? Text(
                           _balance,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 15,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w900,
                             fontFamily: "Mulish"),
                         )
-                            : const Blur(
-                            blur: 3,
-                            blurColor: Color.fromRGBO(138, 29, 92, 1),
-                            child: Padding(
-                                padding:
-                                EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                                child: Text("XXXXXXX",
-                                  style: TextStyle(
-                                      fontFamily: "Mulish"
-                                  ),))),
+                            : const Text("XXXXXXXX",
+                          style: TextStyle(
+                              fontFamily: "Mulish",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),),
                       ),
                       Expanded(child: GestureDetector(
                         onTap: (){
@@ -263,8 +273,8 @@ class _AccountCardState extends State<AccountCard> {
                             }
                           });
                         },
-                        child: Row(
-                          children: const [
+                        child: const Row(
+                          children: [
                             Icon(
                               Icons.library_books_sharp,
                               size: 24,
@@ -305,21 +315,7 @@ class _AccountCardState extends State<AccountCard> {
                     )
                   : const SizedBox(),
               _isLoading
-                  ? const Positioned(
-                      right: 0,
-                      left: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Center(child: SizedBox(
-                            height: 12,
-                            child: CircularProgressIndicator(
-                              color: Color.fromRGBO(225, 0, 134, 1),
-                            ),
-                          ))),
-                    )
+                  ? LoadUtil()
                   : const SizedBox()
             ],
           )),
@@ -329,20 +325,5 @@ class _AccountCardState extends State<AccountCard> {
   checkMiniStatement() {
     CommonUtils.navigateToRoute(
         context: context, widget: MiniStatementScreen(accounts: widget.bankAccount.bankAccountId,));
-    // setState(() {
-    //   _isLoading = true;
-    // });
-    // _accountRepository
-    //     .checkMiniStatement(widget.bankAccount.bankAccountId)
-    //     .then((value) {
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    //   if (value?.status == StatusCode.success.statusCode) {
-    //
-    //   } else {
-    //     AlertUtil.showAlertDialog(context, value?.message ?? "Error");
-    //   }
-    // });
   }
 }

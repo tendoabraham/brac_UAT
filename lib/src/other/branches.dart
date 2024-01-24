@@ -1,3 +1,4 @@
+import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,7 @@ class _BranchPageState extends State<Branches> {
     'Kabwohe','Rubindi','Rubirizi','Mbarara','Lyantonde','Kinoni','Isingiro',
     'Kabale','Muhanga','Kisoro','Rubanda','Ntungamo','Rukungiri','Buyanja','Kihihi'];
 
-  List<String> _southWesternOffShoreItems = ['Mubende','Kisekende','Kasambya',
+  final List<String> _southWesternOffShoreItems = ['Mubende','Kisekende','Kasambya',
     'Kiganda','Kakumiro','Bulenga','Mityana','Kiyinda','Bukuya','Kasusu',
     'Fort Portal','Bundibugyo','Kibiito','Nyahuka','Kasese','Rwiimi','Rukoki',
     'Bwera','Kisinga','Kyenjojo','Kyegegwa','Kagadi','Kibaale','Hoima','Kinubi','Kiboga','Biiso'];
@@ -100,112 +101,174 @@ class _BranchPageState extends State<Branches> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(title: const Text("Branches"),
-        titleTextStyle: const TextStyle(fontFamily: "Mulish",
-            fontWeight: FontWeight.bold,
-            fontSize: 18),),
-      body: Column(
-        children: <Widget>[
-          const SizedBox(
-            height: 12,
+      // appBar: AppBar(
+      //   title: const Text("Branches"),
+      // ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/bk4.png'),
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter
           ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0),
-            alignment: Alignment.centerLeft,
-            child: Image.asset('assets/images/brac.png',
-              height: 100,
-              width: 100,),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0),
-            alignment: Alignment.centerLeft,
-            child: Label(
-              text: "Please select your region",
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0),
-            alignment: Alignment.centerLeft,
-            child: DropdownButton<String>(
-              value: _selectedRegion,
-              onChanged: _onDropdownChanged,
-              items: <String>['Central A','Central B', 'Northern', 'Western','southWestern', 'Eastern']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(value,
-                    style: const TextStyle(
-                      fontFamily: "Mulish",
-                      fontSize: 14,
-                    ),),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Our Branches',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: primaryColor,
+                        fontFamily: "Mulish",
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey[300],
+                        ),
+                        child: Icon(
+                          Icons.close,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 1.0, // Line height
+                color: Colors.grey[300], // Line color
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Expanded(child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // Image.asset('assets/images/brac.png', height: 100, width: 100),
+                      // const SizedBox(height: 16),
+                      Container(
+                        width: screenWidth,
+                        child: Card(
+                            elevation: 5,
+                            // surfaceTintColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            child: Container(
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(20.0),
+                              //   image: const DecorationImage(
+                              //       image: AssetImage('assets/images/bk4.png'),
+                              //       fit: BoxFit.cover,
+                              //       alignment: Alignment.topCenter),
+                              // ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text("Please select your region",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontFamily: "Mulish",
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    DropdownButton<String>(
+                                      value: _selectedRegion,
+                                      onChanged: _onDropdownChanged,
+                                      items: <String>['Central A','Central B', 'Northern', 'Western','southWestern', 'Eastern']
+                                          .map<DropdownMenuItem<String>>((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(12.0),
+                                            child: Text(
+                                              value,
+                                              style: const TextStyle(
+                                                fontFamily: "Mulish",
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      _buildBranchList("Main Branches", _getItemsForSelectedRegion()),
+                      const SizedBox(height: 16),
+                      _buildBranchList("Off-site Branches", _getOffshoreBranchItemsForSelectedRegion()),
+                    ],
                   ),
-                );
-              }).toList(),
-            ),
+                ),
+              )
+              )
+            ],
           ),
-          const SizedBox(
-            height: 18,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0),
-            alignment: Alignment.centerLeft,
-            child:                           Label(
-              text: "Main Branches",
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: (_getItemsForSelectedRegion().length * 20.0) + 5.0,
-            child: ListView.builder(
-              itemCount: _getItemsForSelectedRegion().length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(_getItemsForSelectedRegion()[index],
-                  style: const TextStyle(
-                    color: CupertinoColors.systemGrey,
-                  ),),
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 18,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20.0),
-            alignment: Alignment.centerLeft,
-            child:                           Label(
-              text: "Off-site Branches",
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _getOffshoreBranchItemsForSelectedRegion().length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(_getOffshoreBranchItemsForSelectedRegion()[index],
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: "Mulish",
-                    color:
-                    CupertinoColors.systemGrey,
-                  ),),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+        ),
+      )
+    );
+  }
+
+  Widget _buildBranchList(String title, List<String> items) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Label(text: title, fontSize: 16, fontWeight: FontWeight.bold, textColor: Colors.black),
+        Text(title,
+        style: TextStyle(
+            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: "Mulish",
+        ),),
+        SizedBox(height: 15,),
+        ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
+              margin: const EdgeInsets.only(bottom: 8.0),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  items[index],
+                  style: const TextStyle(fontSize: 14, fontFamily: "Mulish", color: CupertinoColors.systemGrey),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

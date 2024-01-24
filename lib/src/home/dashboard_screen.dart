@@ -1,13 +1,13 @@
-import 'package:brac_mobile/src/auth/activation_screen.dart';
 import 'package:brac_mobile/src/other/branches.dart';
 import 'package:brac_mobile/src/other/contact_us.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../auth/activation_screen.dart';
 import '../auth/login_screen.dart';
 import '../other/app_state.dart';
-import '../other/base_screen.dart';
 import '../other/common_widget.dart';
 
 String imageBase = "assets/images/";
@@ -21,7 +21,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final _sharedPref = CommonSharedPref();
-  String isActivated = "false";
+  bool isActivated = false;
 
   @override
   void initState() {
@@ -30,20 +30,38 @@ class _DashboardState extends State<Dashboard> {
     //TODO: Comment out activation data before sharing
     // _sharedPref.addActivationData("256757964471", "8082316600");
     // _sharedPref.addActivationData("256783657395", "1722542461");
+    // _sharedPref.addActivationData("254719286101", "4654217730");
     checkIsActivated();
     // SystemChrome.setEnabledSystemUIOverlays([]);
   }
 
   checkIsActivated() async {
-    await _sharedPref.getAppIsActivated().then((value) {
+    await _sharedPref.getAppActivationStatus().then((value) {
       setState(() {
-        isActivated = value ?? false;
-        if (isActivated == "true") {
+        // isActivated = value ?? "false";
+
+        // if (value) {
+        //   Provider.of<AppState>(context, listen: false)
+        //       .setActiveWidget(const LoginScreen());
+        // }else{
+        //   Provider.of<AppState>(context, listen: false)
+        //       .setActiveWidget(const ActivationScreen());
+        // }
+
+        if (value) {
+          isActivated = true;
           Provider.of<AppState>(context, listen: false).updateShowLogin(true);
-        } else {
+        }else{
+          isActivated = false;
           Provider.of<AppState>(context, listen: false)
               .updateShowActivation(true);
         }
+        // if (isActivated == "true") {
+        //   Provider.of<AppState>(context, listen: false).updateShowLogin(true);
+        // } else {
+        //   Provider.of<AppState>(context, listen: false)
+        //       .updateShowActivation(true);
+        // }
       });
     });
   }
@@ -68,7 +86,7 @@ class _DashboardState extends State<Dashboard> {
           ),
           SafeArea(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               children: [
                 const SizedBox(
                   height: 32,
@@ -78,7 +96,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 Header(isActivated: isActivated),
                 const SizedBox(
-                  height: 18,
+                  height: 20,
                 ),
                 Powered(),
               ],
@@ -91,7 +109,7 @@ class _DashboardState extends State<Dashboard> {
 }
 
 class Header extends StatelessWidget {
-  final String isActivated;
+  final bool isActivated;
 
   const Header({Key? key, required this.isActivated}) : super(key: key);
 
@@ -115,7 +133,7 @@ class Header extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
         //set border radius more than 50% of height and width to make circle
       ),
-      elevation: 50,
+      elevation: 5,
       shadowColor: Colors.black,
       child: Container(
         decoration: BoxDecoration(
@@ -140,7 +158,7 @@ class Header extends StatelessWidget {
                 ),
                 Label(
                   text: greeting,
-                  fontSize: 12,
+                  fontSize: 13,
                 ),
                 Label(
                   text: "Welcome to Brac Mobile",
@@ -161,7 +179,7 @@ class Header extends StatelessWidget {
                       backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(138, 29, 92, 1)),
                     ),
                     onPressed: () {
-                      if(isActivated == "true"){
+                      if(isActivated){
                         CommonUtils.navigateToRoute(
                             context: context, widget: const LoginScreen());
                       }else{
@@ -216,7 +234,7 @@ class Options extends StatelessWidget{
                         ),
                         Label(
                           text: "Branches",
-                          fontSize: 12,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                         ),
                       ],
@@ -236,7 +254,7 @@ class Options extends StatelessWidget{
                           width: 30,),
                         Label(
                           text: "Contact us",
-                          fontSize: 12,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
                         ),
                       ],

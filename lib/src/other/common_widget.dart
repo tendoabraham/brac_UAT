@@ -33,6 +33,6 @@ class Label extends StatelessWidget {
   Widget build(BuildContext context) => Text(
         text,
         style: TextStyle(
-            fontSize: fontSize, color: textColor, fontWeight: fontWeight),
+            fontSize: fontSize, color: textColor, fontFamily: 'Mulish', fontWeight: fontWeight),
       );
 }

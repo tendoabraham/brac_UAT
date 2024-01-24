@@ -1,4 +1,3 @@
-import 'package:craft_dynamic/dynamic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';

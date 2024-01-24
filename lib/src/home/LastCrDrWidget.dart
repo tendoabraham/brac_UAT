@@ -27,14 +27,14 @@ class LastCrDrState extends State<LastCrDr>{
           borderRadius: BorderRadius.circular(5.0),
           //set border radius more than 50% of height and width to make circle
         ),
-        elevation: 5,
+        elevation: 2,
         surfaceTintColor: Colors.white,
         shadowColor: Colors.black,
         child: Padding(padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
             child: Column(
               children: [
                 const SizedBox(
-                  height: 2,
+                  height: 5,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,9 +56,6 @@ class LastCrDrState extends State<LastCrDr>{
                     Expanded(child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          width: 5,
-                        ),
                         const Text("Last Credit",
                             style: TextStyle(
                                 fontSize: 13,
@@ -66,23 +63,22 @@ class LastCrDrState extends State<LastCrDr>{
                                 fontFamily: "Mulish",
                                 fontWeight: FontWeight.bold
                             )),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         _accountVisible
                             ? Text(_lastCr,
                             style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 color: Colors.black,
                                 fontFamily: "Mulish",
                                 fontWeight: FontWeight.bold
-                            ))  : const Blur(
-                            blur: 3,
-                            blurColor: Color.fromRGBO(138, 29, 92, 1),
-                            child: Padding(
-                                padding:
-                                EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                                child: Text("XXXXXXX",
-                                  style: TextStyle(
-                                      fontFamily: "Mulish"
-                                  ),))),
+                            ))  : const Text("XXXXXXXX",
+                          style: TextStyle(
+                            fontFamily: "Mulish",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),),
                       ],
                     ),),
                     Padding(padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
@@ -94,7 +90,7 @@ class LastCrDrState extends State<LastCrDr>{
                         ),
                       ),),
                     const SizedBox(
-                      height: 18,
+                      height: 16,
                       child: Padding(
                         padding: EdgeInsets.only(top: 2.0), // Add 8 pixels of top padding
                         child: Image(
@@ -120,36 +116,30 @@ class LastCrDrState extends State<LastCrDr>{
                                 fontFamily: "Mulish",
                                 fontWeight: FontWeight.bold
                             )),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         _accountVisible
                             ? Text(_lastDr,
                             style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 color: Colors.black,
                                 fontFamily: "Mulish",
                                 fontWeight: FontWeight.bold
-                            )) : const Blur(
-                            blur: 3,
-                            blurColor: Color.fromRGBO(138, 29, 92, 1),
-                            child: Padding(
-                                padding:
-                                EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                                child: Text("XXXXXXX",
-                                  style: TextStyle(
-                                      fontFamily: "Mulish"
-                                  ),))),
+                            )) : const Text("XXXXXXXX",
+                          style: TextStyle(
+                            fontFamily: "Mulish",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),),
                       ],
                     ),),
                   ],
                 ),
                 const SizedBox(
-                    height: 5),
+                    height: 8),
                           _isLoading
-                              ? const SizedBox(
-                            height: 12,
-                            child: CircularProgressIndicator(
-                              color: Color.fromRGBO(225, 0, 134, 1),
-                            ),
-                          )
+                              ? LoadUtil()
                     :
                 Center(
                   child: GestureDetector(
@@ -160,7 +150,6 @@ class LastCrDrState extends State<LastCrDr>{
 
                       final _api_service = APIService();
                       _api_service.checkRecentCrDr()
-                      // _accountRepository.checkRecentCrDr()
                           .then((value) {
                         if (value != null) {
                           if (value.status == StatusCode.success.statusCode) {
@@ -177,6 +166,10 @@ class LastCrDrState extends State<LastCrDr>{
                             });
 
                           } else {
+                            setState(() {
+                              _isLoading = false;
+                            });
+
                             AlertUtil.showAlertDialog(
                                 context, value.message ?? "Error");
                           }
@@ -207,7 +200,10 @@ class LastCrDrState extends State<LastCrDr>{
                       ],
                     ),
                   ),
-                )
+                ),
+                const SizedBox(
+                  height: 0,
+                ),
               ],
             )),
       ),);

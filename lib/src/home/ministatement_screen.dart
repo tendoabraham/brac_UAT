@@ -1,10 +1,12 @@
+import 'package:brac_mobile/src/auth/extensions.dart';
+import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
-import 'package:craft_dynamic/dynamic_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../other/base_screen.dart';
 import '../other/common_widget.dart';
+import '../other/numberFormatter.dart';
 
 class MiniStatementScreen extends StatefulWidget {
   final String accounts;
@@ -37,7 +39,7 @@ class _MiniStatementScreenState extends State<MiniStatementScreen> {
       child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/images/trx_bk2.png'),
+                image: AssetImage('assets/images/bk4.png'),
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter
             ),
@@ -47,50 +49,50 @@ class _MiniStatementScreenState extends State<MiniStatementScreen> {
               const SizedBox(
                 height: 15,
               ),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                },
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Image.asset(
-                      'assets/images/back2.png',
-                      height: 30,
-                      width: 30,
-                    ),
-                    const Text("Home",
+                    const Text(
+                      'Mini Statement',
                       style: TextStyle(
-                          fontSize: 13,
-                          fontFamily: "Mulish",
-                          color: Colors.white
-                      ),),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: primaryColor,
+                        fontFamily: "Mulish",
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey[300],
+                        ),
+                        child: const Icon(
+                          Icons.close,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 15,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 1.0, // Line height
+                color: Colors.grey[300], // Line color
               ),
-              const Text("Mini Statement",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: "Mulish",
-                    color: Colors.white,
-                    fontSize: 30
-                ),),
               const SizedBox(
-                height: 24,
+                height: 20,
               ),
               _isLoading
-                  ? const Center(
-                child: SizedBox(
-                  height: 12,
-                  child: CircularProgressIndicator(
-                    color: Color.fromRGBO(225, 0, 134, 1),
-                  ),
-                ),) // show a progress indicator while loading
+                  ? Center(
+                child: LoadUtil(),) // show a progress indicator while loading
                   : showTransactionList // show the transaction list if available
                   ? Expanded(child: TransactionsList(miniStatement: ministatement))
                   : const SizedBox()
@@ -103,7 +105,8 @@ class _MiniStatementScreenState extends State<MiniStatementScreen> {
     setState(() {
       _isLoading = true;
     });
-    _accountRepository.checkMiniStatement(bankAccountId).then((value) {
+    final _api_service = APIService();
+    _api_service.checkMiniStmnt(bankAccountID: bankAccountId).then((value) {
       setState(() {
         _isLoading = false;
       });
@@ -134,48 +137,82 @@ class TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     addTransactions(list: miniStatement);
-    return ListView.separated(
+    return ListView.builder(
       itemCount: transactionList.length,
       itemBuilder: (BuildContext context, index) {
         Color textColor =
         transactionList[index].trxType == "DR" ? Colors.green : Colors.red;
-        return Container(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+
+        return Card(
+          margin: EdgeInsets.symmetric(vertical: 6.0, horizontal: 16.0),
+          elevation: 4.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Date: ${transactionList[index].formattedDate()}",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      width: 200,
-                      child: Text(transactionList[index].narration),
-                    )
-                  ],
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Date: ${transactionList[index].date}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13.0,
+                          fontFamily: "Mulish",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        transactionList[index].narration,
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.grey[600],
+                          fontFamily: "Mulish",
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Amount"),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(transactionList[index].amount,
-                        style: TextStyle(fontWeight: FontWeight.bold,
-                        color: textColor))
-                  ],
-                )
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Amount",
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.grey[600],
+                          fontFamily: "Mulish",
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        formatAmount(transactionList[index].amount),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.0,
+                          color: textColor,
+                          fontFamily: "Mulish",
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
-            ));
+            ),
+          ),
+        );
       },
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
     );
   }
 
@@ -184,7 +221,15 @@ class TransactionsList extends StatelessWidget {
       transactionList.add(Transaction.fromJson(item));
     });
   }
+  
+  formatAmount(String amount){
+    String formatedBal = formatCurrency(amount);
+    String wholeBal = formatedBal.split('.')[0];
+    String _balance = "UGX $wholeBal";
+    return _balance;
+  }
 }
+
 
 class Transaction {
   String date;

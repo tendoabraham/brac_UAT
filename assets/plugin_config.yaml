@@ -5,14 +5,18 @@ urls:
   test: true
   uat: https://uat.craftsilicon.com
   live: https://app.craftsilicon.com
-  tokenUrl: /ElmaAuthDynamicV3/api/auth/apps
+  tokenUrl: /ElmaAuthDynamicV3/api/auth/app
+#  tokenUrl: /ElmaAuthDynamicV3/api/auth/apps
 
 request:
   trxSource: APP
   versionNumber: 1
-  bankId: 8888
+  bankId: "8888"
   appName: BRACMOBILE
-  country: UGANDATEST
+  country: UGANDA
+  bankCustomerID: "25618888"
+  countryCode: "256"
+  countryIsoCode: "UG"
 
 crypt:
   staticEncryptKey: csXDRzpcEPm_jMny
