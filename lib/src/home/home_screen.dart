@@ -1,11 +1,8 @@
 import 'package:brac_mobile/src/home/LastCrDrLoading.dart';
 import 'package:brac_mobile/src/other/home_load.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
-import 'package:craft_dynamic/dynamic_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../other/base_screen.dart';
-import '../other/common_widget.dart';
 import 'LastCrDrWidget.dart';
 import 'account_widget.dart';
 class HomeScreen extends StatefulWidget {
@@ -100,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 5),
           children: [
             const SizedBox(
               height: 30,
@@ -128,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 12,
             ),
             Container(
-              margin: const EdgeInsets.only(left: 15.0),
+              margin: const EdgeInsets.only(left: 20.0),
               child:  const Text("FUNCTIONS",
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -138,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),),
             ),
             const SizedBox(
-              height: 12,
+              height: 0,
             ),
             MainModules(),
             const SizedBox(
@@ -193,14 +191,15 @@ class MainModules extends StatelessWidget {
                   GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: const EdgeInsets.only(
+                          left: 14, right: 14, top: 8, bottom: 8),
                       itemCount: snapshot.data?.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 16 / 18,
+                              childAspectRatio: .9,
                               crossAxisCount: 3,
-                              mainAxisSpacing: 1,
-                              crossAxisSpacing: 1),
+                              mainAxisSpacing: 12,
+                              crossAxisSpacing: 4),
                       itemBuilder: (context, index) {
                         return ModuleItemWidget(
                           moduleItem: snapshot.data![index],
