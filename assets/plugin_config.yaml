@@ -5,8 +5,9 @@ urls:
   test: true
   uat: https://uat.craftsilicon.com
   live: https://app.craftsilicon.com
-  tokenUrl: /ElmaAuthDynamicV3/api/auth/app
+#  tokenUrl: /ElmaAuthDynamicV3/api/auth/app
 #  tokenUrl: /ElmaAuthDynamicV3/api/auth/apps
+  tokenUrl: /ElmaV4Auth/api/auth/app
 
 request:
   trxSource: APP

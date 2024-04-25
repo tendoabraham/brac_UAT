@@ -28,7 +28,8 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
 
     //TODO: Comment out activation data before sharing
-    // _sharedPref.addActivationData("256757964471", "8082316600");
+    // _sharedPref.addActivationData("256783657395", "1671877299");
+    _sharedPref.addActivationData("256757964471", "8082316600");
     // _sharedPref.addActivationData("256783657395", "1722542461");
     // _sharedPref.addActivationData("254719286101", "4654217730");
     checkIsActivated();
@@ -38,16 +39,6 @@ class _DashboardState extends State<Dashboard> {
   checkIsActivated() async {
     await _sharedPref.getAppActivationStatus().then((value) {
       setState(() {
-        // isActivated = value ?? "false";
-
-        // if (value) {
-        //   Provider.of<AppState>(context, listen: false)
-        //       .setActiveWidget(const LoginScreen());
-        // }else{
-        //   Provider.of<AppState>(context, listen: false)
-        //       .setActiveWidget(const ActivationScreen());
-        // }
-
         if (value) {
           isActivated = true;
           Provider.of<AppState>(context, listen: false).updateShowLogin(true);
@@ -56,12 +47,6 @@ class _DashboardState extends State<Dashboard> {
           Provider.of<AppState>(context, listen: false)
               .updateShowActivation(true);
         }
-        // if (isActivated == "true") {
-        //   Provider.of<AppState>(context, listen: false).updateShowLogin(true);
-        // } else {
-        //   Provider.of<AppState>(context, listen: false)
-        //       .updateShowActivation(true);
-        // }
       });
     });
   }
@@ -85,25 +70,36 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           SafeArea(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    children: [
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      Header(isActivated: isActivated),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+                Powered(),
                 const SizedBox(
                   height: 32,
                 ),
-                const SizedBox(
-                  height: 18,
-                ),
-                Header(isActivated: isActivated),
-                const SizedBox(
-                  height: 20,
-                ),
-                Powered(),
               ],
             ),
           ),
         ],
       ),
+
     );
   }
 }
@@ -185,8 +181,8 @@ class Header extends StatelessWidget {
                       }else{
                         CommonUtils.navigateToRoute(
                             //TODO: update to activation
-                            context: context, widget: const ActivationScreen());
-                      // context: context, widget: const LoginScreen());
+                            // context: context, widget: const ActivationScreen());
+                      context: context, widget: const LoginScreen());
                       }
                     },
                     child: const Text('Login'),

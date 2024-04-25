@@ -99,13 +99,53 @@ class _BranchPageState extends State<Branches> {
     }
   }
 
+  Widget _buildRegionButton(String region) {
+    bool isSelected = region == _selectedRegion;
+
+    return isSelected
+        ? ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _selectedRegion = region;
+        });
+      },
+      style: ElevatedButton.styleFrom(
+        primary: primaryColor, // Primary color for selected button
+        onPrimary: Colors.white, // Text color for selected button
+      ),
+      child: Text(
+        region,
+        style: TextStyle(
+          fontFamily: "Mulish",
+          fontSize: 14,
+        ),
+      ),
+    )
+        : OutlinedButton(
+      onPressed: () {
+        setState(() {
+          _selectedRegion = region;
+        });
+      },
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(color: primaryColor), // Outline color for unselected button
+      ),
+      child: Text(
+        region,
+        style: TextStyle(
+          fontFamily: "Mulish",
+          color: primaryColor,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Branches"),
-      // ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -126,8 +166,8 @@ class _BranchPageState extends State<Branches> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Our Branches',
+                    const Text(
+                      ' Our Branches',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
@@ -160,7 +200,7 @@ class _BranchPageState extends State<Branches> {
                 color: Colors.grey[300], // Line color
               ),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               Expanded(child: SingleChildScrollView(
                 child: Padding(
@@ -191,32 +231,21 @@ class _BranchPageState extends State<Branches> {
                                   children: [
                                     Text("Please select your region",
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontFamily: "Mulish",
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: primaryColor,
                                       ),
                                     ),
                                     const SizedBox(height: 16),
-                                    DropdownButton<String>(
-                                      value: _selectedRegion,
-                                      onChanged: _onDropdownChanged,
-                                      items: <String>['Central A','Central B', 'Northern', 'Western','southWestern', 'Eastern']
-                                          .map<DropdownMenuItem<String>>((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: EdgeInsets.all(12.0),
-                                            child: Text(
-                                              value,
-                                              style: const TextStyle(
-                                                fontFamily: "Mulish",
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
+                                    Center(
+                                      child: Wrap(
+                                        spacing: 10,
+                                        children: <Widget>[
+                                          for (String region in ['Central A', 'Central B', 'Northern', 'Western', 'Southwestern', 'Eastern'])
+                                            _buildRegionButton(region),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -244,9 +273,8 @@ class _BranchPageState extends State<Branches> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Label(text: title, fontSize: 16, fontWeight: FontWeight.bold, textColor: Colors.black),
         Text(title,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: "Mulish",
         ),),
         SizedBox(height: 15,),

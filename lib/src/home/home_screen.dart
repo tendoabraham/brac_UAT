@@ -1,10 +1,13 @@
 import 'package:brac_mobile/src/home/LastCrDrLoading.dart';
+import 'package:brac_mobile/src/home/dashboard_screen.dart';
 import 'package:brac_mobile/src/other/home_load.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../other/base_screen.dart';
 import 'LastCrDrWidget.dart';
 import 'account_widget.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -51,13 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
         lastLogin = value;
       });
     });
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    @override
+    Widget build(BuildContext context) {
+      // TODO: implement build
+      throw UnimplementedError();
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,95 +78,116 @@ class _HomeScreenState extends State<HomeScreen> {
 
     String name = '$firstName $lastName';
 
-    return  WillPopScope(
+    return WillPopScope(
         onWillPop: () async {
-            return AlertUtil.showAlertDialog(context, "Would you like to logout",
-                        isConfirm: true)
-                    .then((value) {
-                  if (value) {
-                    Navigator.of(context).pop();
-                  }
-                }) ??
-                false;
-    },
-    child: BaseScreen(
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/bk.png'),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter
-          ),
-        ),
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Text(greeting,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontFamily: "Mulish",
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold
-              ),),
-            Text(name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontFamily: "Mulish",
-                  color: Colors.white,
-                  fontSize: 13
-              ),),
-            AccountWidget(),
-            const SizedBox(
-              height: 1,
-            ),
-            LastCrDr(),
-            const SizedBox(
-              height: 12,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20.0),
-              child:  const Text("FUNCTIONS",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontFamily: "Mulish",
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold
-                ),),
-            ),
-            const SizedBox(
-              height: 0,
-            ),
-            MainModules(),
-            const SizedBox(
-              height: 12,
-            ),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          side: const BorderSide(color: Color.fromRGBO(138, 29, 92, 1)))),
-                  backgroundColor: MaterialStateProperty.all(const Color.fromRGBO(138, 29, 92, 1)),
-                ),
-                onPressed: () {
-                  AlertUtil.showAlertDialog(context, "Proceed to logout?",
+          return AlertUtil.showAlertDialog(context, "Would you like to logout",
                       isConfirm: true)
-                      .then((value) {
-                    if (value) {
-                      Navigator.of(context).pop();
-                    }
-                  });
-                },
-                child: const Text('Logout'),
-              ),)
-          ],
-        )
-        ,),),);
+                  .then((value) {
+                if (value) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Dashboard()),
+                        (route) => false,
+                  );
+                  // Navigator.of(context).pop();
+                }
+              }) ??
+              false;
+        },
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: const SystemUiOverlayStyle(
+            statusBarColor:
+                Colors.transparent, // Make the status bar transparent
+          ),
+          child: Scaffold(
+            body: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/bk.png'),
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter),
+              ),
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                children: [
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Text(
+                    greeting,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontFamily: "Mulish",
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontFamily: "Mulish",
+                        color: Colors.white,
+                        fontSize: 13),
+                  ),
+                  AccountWidget(),
+                  const SizedBox(
+                    height: 1,
+                  ),
+                  LastCrDr(),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 20.0),
+                    child: const Text(
+                      "FUNCTIONS",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontFamily: "Mulish",
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 0,
+                  ),
+                  MainModules(),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    side: const BorderSide(
+                                        color:
+                                            Color.fromRGBO(138, 29, 92, 1)))),
+                        backgroundColor: MaterialStateProperty.all(
+                            const Color.fromRGBO(138, 29, 92, 1)),
+                      ),
+                      onPressed: () {
+                        AlertUtil.showAlertDialog(context, "Proceed to logout?",
+                                isConfirm: true)
+                            .then((value) {
+                          if (value) {
+                            Navigator.of(context).pop();
+                          }
+                        });
+                      },
+                      child: const Text('Logout'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
 
@@ -179,7 +202,9 @@ class MainModules extends StatelessWidget {
         builder:
             (BuildContext context, AsyncSnapshot<List<ModuleItem>> snapshot) {
           Widget child = Center(
-            child: HomeLoad(child: const LastCrDrLoading(),),
+            child: HomeLoad(
+              child: const LastCrDrLoading(),
+            ),
           );
           if (snapshot.hasData) {
             var moduleItems = snapshot.data;
@@ -187,24 +212,22 @@ class MainModules extends StatelessWidget {
               child: LoadUtil(),
             );
             if (moduleItems != null && moduleItems.isNotEmpty) {
-              child =
-                  GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 8, bottom: 8),
-                      itemCount: snapshot.data?.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: .9,
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 12,
-                              crossAxisSpacing: 4),
-                      itemBuilder: (context, index) {
-                        return ModuleItemWidget(
-                          moduleItem: snapshot.data![index],
-                        );
-                      });
+              child = GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.only(
+                      left: 14, right: 14, top: 8, bottom: 8),
+                  itemCount: snapshot.data?.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: .9,
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 4),
+                  itemBuilder: (context, index) {
+                    return ModuleItemWidget(
+                      moduleItem: snapshot.data![index],
+                    );
+                  });
             }
           }
           return child;
