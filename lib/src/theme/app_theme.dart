@@ -107,6 +107,7 @@ class AppTheme {
           fontFamily: "Mulish",
           fontSize: 13,
         ),
+        labelPadding: EdgeInsets.symmetric(horizontal: 5),
         surfaceTintColor: Color(0xffF8FAFD)),
     scaffoldBackgroundColor: const Color(0xffF8FAFD),
   );

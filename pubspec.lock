@@ -253,8 +253,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: ftb-plugin
-      resolved-ref: ebb160fc903d97b4c761b03fe22f349844f3400d
+      ref: brac-plugin
+      resolved-ref: "4847d3398155ed4acf1e172a0ab3c7f19e22c72a"
       url: "https://github.com/kagwicharles/craftdynamic_hive.git"
     source: git
     version: "0.0.1"
