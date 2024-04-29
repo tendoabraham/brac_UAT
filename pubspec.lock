@@ -125,10 +125,10 @@ packages:
     dependency: transitive
     description:
       name: cached_network_image_web
-      sha256: "42a835caa27c220d1294311ac409a43361088625a4f23c820b006dd9bffb3316"
+      sha256: "205d6a9f1862de34b93184f22b9d2d94586b2f05c581d546695e3d8f6a805cd7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.2.0"
   camera:
     dependency: transitive
     description:
@@ -254,7 +254,7 @@ packages:
     description:
       path: "."
       ref: brac-plugin
-      resolved-ref: "4847d3398155ed4acf1e172a0ab3c7f19e22c72a"
+      resolved-ref: "684295dc30d3db705346ccb65349ce7989844306"
       url: "https://github.com/kagwicharles/craftdynamic_hive.git"
     source: git
     version: "0.0.1"

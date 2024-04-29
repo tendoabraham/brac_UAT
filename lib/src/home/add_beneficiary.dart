@@ -112,12 +112,12 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
           title: const Text(
             "Alert",
             style: TextStyle(
-                fontFamily: "Myriad Pro", fontWeight: FontWeight.bold),
+                fontFamily: "Mulish", fontWeight: FontWeight.bold),
           ),
           content: Text(
             message,
             style: TextStyle(
-              fontFamily: "Myriad Pro",
+              fontFamily: "Mulish",
             ),
           ),
           actions: <Widget>[

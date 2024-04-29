@@ -1,6 +1,7 @@
 import 'package:brac_mobile/src/home/LastCrDrLoading.dart';
 import 'package:brac_mobile/src/home/dashboard_screen.dart';
 import 'package:brac_mobile/src/other/home_load.dart';
+import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,19 +81,51 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return WillPopScope(
         onWillPop: () async {
-          return AlertUtil.showAlertDialog(context, "Would you like to logout",
-                      isConfirm: true)
-                  .then((value) {
-                if (value) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Dashboard()),
-                        (route) => false,
-                  );
-                  // Navigator.of(context).pop();
-                }
-              }) ??
-              false;
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text(
+                  "Alert",
+                  style: TextStyle(
+                    fontFamily: "Mulish",
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                content: const Text(
+                  "Are you sure you want to Logout?",
+                  style: TextStyle(
+                    fontFamily: "Mulish",
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green, fontFamily: "Mulish", fontSize: 18),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop(true); // Allow back navigation
+                    },
+                  ),
+                  TextButton(
+                    child: const Text(
+                      "Yes",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor, fontFamily: "Mulish", fontSize: 18),
+                    ),
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Dashboard()),
+                            (route) => false,
+                      ); // Allow back navigation
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return false;
         },
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(
@@ -172,13 +205,50 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Color.fromRGBO(138, 29, 92, 1)),
                       ),
                       onPressed: () {
-                        AlertUtil.showAlertDialog(context, "Proceed to logout?",
-                                isConfirm: true)
-                            .then((value) {
-                          if (value) {
-                            Navigator.of(context).pop();
-                          }
-                        });
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                "Alert",
+                                style: TextStyle(
+                                  fontFamily: "Mulish",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              content: const Text(
+                                "Are you sure you want to Logout?",
+                                style: TextStyle(
+                                  fontFamily: "Mulish",
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text(
+                                    "Cancel",
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.green, fontFamily: "Mulish", fontSize: 18),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true); // Allow back navigation
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text(
+                                    "Yes",
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor, fontFamily: "Mulish", fontSize: 18),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const Dashboard()),
+                                          (route) => false,
+                                    ); // Allow back navigation
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       child: const Text('Logout'),
                     ),

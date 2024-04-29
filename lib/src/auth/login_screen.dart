@@ -58,21 +58,21 @@ class _LoginScreenState extends State<LoginScreen> {
           title: const Text(
             "Alert",
             style: TextStyle(
-              fontFamily: "Myriad Pro",
+              fontFamily: "Mulish",
               fontWeight: FontWeight.bold,
             ),
           ),
           content: const Text(
             "Please login with your PIN, select 'Account Settings' on the main menu and navigate to 'Biometrics Login' to enable fingerprint login",
             style: TextStyle(
-              fontFamily: "Myriad Pro",
+              fontFamily: "Mulish",
             ),
           ),
           actions: <Widget>[
             TextButton(
               child: const Text(
                 "OK",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily: "Mulish", fontWeight: FontWeight.bold, fontSize: 18, color: primaryColor),
               ),
               onPressed: () {
                 Navigator.of(context).pop();
