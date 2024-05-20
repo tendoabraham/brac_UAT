@@ -3,6 +3,7 @@ import 'package:blur/blur.dart';
 import 'package:brac_mobile/src/home/account_card_load.dart';
 import 'package:brac_mobile/src/home/ministatement_screen.dart';
 import 'package:brac_mobile/src/other/home_load.dart';
+import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -264,14 +265,56 @@ class _AccountCardState extends State<AccountCard> {
                       ),
                       Expanded(child: GestureDetector(
                         onTap: (){
-                          AlertUtil.showAlertDialog(context,
-                              "Continue to view account ministatement",
-                              isConfirm: true)
-                              .then((value) {
-                            if (value) {
-                              checkMiniStatement();
-                            }
-                          });
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text(
+                                  "Alert",
+                                  style: TextStyle(
+                                    fontFamily: "Mulish",
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                content: const Text(
+                                  "Continue to view account ministatement?",
+                                  style: TextStyle(
+                                    fontFamily: "Mulish",
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text(
+                                      "Cancel",
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontFamily: "Mulish", fontSize: 18),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text(
+                                      "Yes",
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor, fontFamily: "Mulish", fontSize: 18),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+                                      checkMiniStatement();
+                                      // Allow back navigation
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          // AlertUtil.showAlertDialog(context,
+                          //     "Continue to view account ministatement",
+                          //     isConfirm: true)
+                          //     .then((value) {
+                          //   if (value) {
+                          //     checkMiniStatement();
+                          //   }
+                          // });
                         },
                         child: const Row(
                           children: [

@@ -5,6 +5,9 @@ import '../other/LastCrDrModel.dart';
 
 
 final _sharedPref = CommonSharedPref();
+//TODO: Update in live
+String validate = "https://uat.craftsilicon.com/ElmaV4WebValidate/api/elma/v4/validate";
+String purchase = "https://uat.craftsilicon.com/elmav4webpurchase/api/elma/v4/purchase";
 
 extension LastCrDr on APIService{
 
@@ -159,6 +162,165 @@ extension SaveBeneficiary on APIService{
       logger.d("GETBillers response : $res");
     } catch (e) {
       CommonUtils.showToast("Biller names fetch failed");
+      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      return dynamicResponse;
+    }
+
+    return dynamicResponse;
+  }
+}
+
+extension GetDataFrequency on APIService{
+
+  Future<DynamicResponse> getDataFreqs() async {
+    String? res;
+    DynamicResponse dynamicResponse =
+    DynamicResponse(status: StatusCode.unknown.name);
+    Map<String, dynamic> requestObj = {};
+    Map<String, dynamic> innerMap = {};
+    // requestObj["ModuleID"] = "ADDBENEFICIARY";
+    // requestObj["MerchantID"] = "BENEFICIARY";
+    innerMap["HEADER"] = "DataBundleCategories";
+    innerMap["INFOFIELD1"] = "MTN";
+    // innerMap["INFOFIELD2"] = billerName;
+    // innerMap["INFOFIELD3"] = alias;
+    // innerMap["INFOFIELD4"] = account;
+    // innerMap["MerchantID"] = "BENEFICIARY";
+    requestObj[RequestParam.DynamicForm.name] = innerMap;
+
+    final route = await _sharedPref.getRoute(RouteUrl.other.name.toLowerCase());
+    try {
+      res = await performDioRequest(
+          await dioRequestBodySetUp("DBCALL",
+              objectMap: requestObj, isAuthenticate: false),
+          route: route);
+      dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+      logger.d("GETDataFreq response : $res");
+    } catch (e) {
+      CommonUtils.showToast("Data Freq fetch failed");
+      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      return dynamicResponse;
+    }
+
+    return dynamicResponse;
+  }
+}
+
+extension GetDataBundles on APIService{
+
+  Future<DynamicResponse> getDataBundles(
+      // String category,
+      // String billerName,
+      // String alias,
+      String category) async {
+    String? res;
+    DynamicResponse dynamicResponse =
+    DynamicResponse(status: StatusCode.unknown.name);
+    Map<String, dynamic> requestObj = {};
+    Map<String, dynamic> innerMap = {};
+    // requestObj["ModuleID"] = "ADDBENEFICIARY";
+    // requestObj["MerchantID"] = "BENEFICIARY";
+    innerMap["HEADER"] = "DataBundle";
+    innerMap["INFOFIELD1"] = "MTN";
+    innerMap["INFOFIELD2"] = category;
+    // innerMap["INFOFIELD3"] = alias;
+    // innerMap["INFOFIELD4"] = account;
+    // innerMap["MerchantID"] = "BENEFICIARY";
+    requestObj[RequestParam.DynamicForm.name] = innerMap;
+
+    final route = await _sharedPref.getRoute(RouteUrl.other.name.toLowerCase());
+    try {
+      res = await performDioRequest(
+          await dioRequestBodySetUp("DBCALL",
+              objectMap: requestObj, isAuthenticate: false),
+          route: route);
+      dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+      logger.d("GETBundles response : $res");
+    } catch (e) {
+      CommonUtils.showToast("Bundles fetch failed");
+      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      return dynamicResponse;
+    }
+
+    return dynamicResponse;
+  }
+}
+
+extension validateData on APIService{
+
+  Future<DynamicResponse> dataValidation(
+      String category,
+      String ID,
+      String mobile,) async {
+    String? res;
+    DynamicResponse dynamicResponse =
+    DynamicResponse(status: StatusCode.unknown.name);
+    Map<String, dynamic> requestObj = {};
+    Map<String, dynamic> innerMap = {};
+    requestObj["ModuleID"] = "MTNDATA";
+    requestObj["MerchantID"] = "MTNDB";
+    innerMap["InfoField1"] = ID;
+    innerMap["InfoField2"] = category;
+    innerMap["ACCOUNTID"] = mobile;
+    innerMap["MerchantID"] = "MTNDB";
+    requestObj["Validate"] = innerMap;
+    // requestObj["EncryptedFields"] = {"PIN": "$encryptedPin"};
+    // requestObj[RequestParam.DynamicForm.name] = innerMap;
+
+    final route = validate;
+    try {
+      res = await performDioRequest(
+          await dioRequestBodySetUp("VALIDATE",
+              objectMap: requestObj, isAuthenticate: false),
+          route: route);
+      dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+      logger.d("Validate Data response : $res");
+    } catch (e) {
+      CommonUtils.showToast("Data Number Validation failed");
+      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      return dynamicResponse;
+    }
+
+    return dynamicResponse;
+  }
+}
+
+extension payData on APIService{
+
+  Future<DynamicResponse> dataPayment(
+      String category,
+      String ID,
+      String mobile,
+      String account,
+      String amount,
+      String encryptedPin,) async {
+    String? res;
+    DynamicResponse dynamicResponse =
+    DynamicResponse(status: StatusCode.unknown.name);
+    Map<String, dynamic> requestObj = {};
+    Map<String, dynamic> innerMap = {};
+    requestObj["ModuleID"] = "MTNDATA";
+    requestObj["MerchantID"] = "MTNDB";
+    innerMap["InfoField1"] = ID;
+    innerMap["InfoField2"] = category;
+    innerMap["ACCOUNTID"] = mobile;
+    innerMap["AMOUNT"] = amount;
+    innerMap["BANKACCOUNTID"] = account;
+    innerMap["MerchantID"] = "MTNDB";
+    requestObj["PayBill"] = innerMap;
+    requestObj["EncryptedFields"] = {"PIN": "$encryptedPin"};
+    // requestObj[RequestParam.DynamicForm.name] = innerMap;
+
+    final route = purchase;
+    try {
+      res = await performDioRequest(
+          await dioRequestBodySetUp("PAYBILL",
+              objectMap: requestObj, isAuthenticate: false),
+          route: route);
+      dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+      logger.d("Pay Data response : $res");
+    } catch (e) {
+      CommonUtils.showToast("Pay Data fetch failed");
       AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
