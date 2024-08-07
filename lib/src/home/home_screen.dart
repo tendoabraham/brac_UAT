@@ -5,6 +5,7 @@ import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 import '../other/base_screen.dart';
 import 'LastCrDrWidget.dart';
 import 'account_widget.dart';
@@ -26,10 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
   double value = 0;
   String? firstName, lastName, lastLogin;
   final _sharedPref = CommonSharedPref();
+  // final _noScreenshot = NoScreenshot.instance;
 
   @override
   initState() {
     super.initState();
+    // _noScreenshot.screenshotOff();
     getUserInfo();
   }
 

@@ -4,11 +4,14 @@ import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../auth/activation_screen.dart';
 import '../auth/login_screen.dart';
 import '../other/app_state.dart';
 import '../other/common_widget.dart';
+import '../theme/app_theme.dart';
 
 String imageBase = "assets/images/";
 
@@ -22,11 +25,12 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final _sharedPref = CommonSharedPref();
   bool isActivated = false;
+  // final _noScreenshot = NoScreenshot.instance;
 
   @override
   void initState() {
     super.initState();
-
+    // _noScreenshot.screenshotOff();
     //TODO: Comment out activation data before sharing
     // _sharedPref.addActivationData("256783657395", "1671877299");
     _sharedPref.addActivationData("256757964471", "8082316600");
@@ -88,6 +92,28 @@ class _DashboardState extends State<Dashboard> {
                         height: 20,
                       ),
                     ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    launchUrl(
+                        Uri.parse('https://www.bracugandabankltd.com/wp-content/uploads/2023/05/data-protection-and-privacy.pdf'),
+                        mode: LaunchMode.externalApplication,
+                        webViewConfiguration: const WebViewConfiguration(
+                          enableJavaScript: false,
+                        ));
+                  },
+                  child: const Center(
+                    child: Text("View Our Data Protection and Privacy Statement",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor,
+                      ),
+                    ),
                   ),
                 ),
                 Powered(),
@@ -181,8 +207,8 @@ class Header extends StatelessWidget {
                       }else{
                         CommonUtils.navigateToRoute(
                             //TODO: update to activation
-                            // context: context, widget: const ActivationScreen());
-                      context: context, widget: const LoginScreen());
+                            context: context, widget: const ActivationScreen());
+                      // context: context, widget: const LoginScreen());
                       }
                     },
                     child: const Text('Login'),

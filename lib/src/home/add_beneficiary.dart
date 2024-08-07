@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:contact_picker_platform_interface/contact_picker_platform_interface.dart';
 import 'package:fluttercontactpicker/src/interface.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 
 import '../other/base_screen.dart';
 import '../theme/app_theme.dart';
@@ -31,9 +32,11 @@ class _AddBeneficiaryState extends State<AddBeneficiary> {
   TextEditingController aliasController = TextEditingController();
   List<BillerType> billerTypes = [];
   List<BillerName> billerNames = [];
+  // final _noScreenshot = NoScreenshot.instance;
 
   @override
   void initState() {
+    // _noScreenshot.screenshotOff();
     getBillerTypes();
     super.initState();
   }

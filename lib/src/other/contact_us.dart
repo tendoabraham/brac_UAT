@@ -1,6 +1,7 @@
 import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 import '../other/base_screen.dart';
 import '../other/common_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,8 +13,14 @@ class ContactUs extends StatefulWidget {
   State<ContactUs> createState() => _ContactUsState();
 }
 
-class _ContactUsState extends State<ContactUs>{
+class _ContactUsState extends State<ContactUs> {
+  // final _noScreenshot = NoScreenshot.instance;
 
+  @override
+  void initState() {
+    // _noScreenshot.screenshotOff();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
@@ -38,7 +45,8 @@ class _ContactUsState extends State<ContactUs>{
                   height: 30,
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -93,7 +101,7 @@ class _ContactUsState extends State<ContactUs>{
                 Container(
                   margin: const EdgeInsets.only(left: 20.0),
                   alignment: Alignment.centerLeft,
-                  child:                           Label(
+                  child: Label(
                     text: "Get in touch with us\nAny time. Any day",
                     fontSize: 14,
                     textColor: CupertinoColors.systemGrey,
@@ -105,7 +113,7 @@ class _ContactUsState extends State<ContactUs>{
                 Container(
                   margin: const EdgeInsets.only(left: 20.0),
                   alignment: Alignment.centerLeft,
-                  child:                           Label(
+                  child: Label(
                     text: "Address",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -115,8 +123,9 @@ class _ContactUsState extends State<ContactUs>{
                 Container(
                   margin: const EdgeInsets.only(left: 20.0),
                   alignment: Alignment.centerLeft,
-                  child:                           Label(
-                    text: "Plot 201, Mengo Kabuusu Rubaga \nP.O.BOX 6582, Kampala",
+                  child: Label(
+                    text:
+                        "Plot 201, Mengo Kabuusu Rubaga \nP.O.BOX 6582, Kampala",
                     fontSize: 14,
                   ),
                 ),
@@ -126,7 +135,7 @@ class _ContactUsState extends State<ContactUs>{
                 Container(
                   margin: const EdgeInsets.only(left: 20.0),
                   alignment: Alignment.centerLeft,
-                  child:                           Label(
+                  child: Label(
                     text: "Support",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -145,6 +154,60 @@ class _ContactUsState extends State<ContactUs>{
                           Icon(Icons.phone),
                           SizedBox(width: 16.0),
                           Text('+256200900720'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: InkWell(
+                    onTap: () {
+                      _launchPhoneDialer('0800399990');
+                    },
+                    child: SizedBox(
+                      height: 35.0,
+                      child: Row(
+                        children: [
+                          TollFreeIcon(),
+                          SizedBox(width: 16.0),
+                          Text('0800399990'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: InkWell(
+                    onTap: () {
+                      _launchPhoneDialer('0800399999');
+                    },
+                    child: SizedBox(
+                      height: 35.0,
+                      child: Row(
+                        children: [
+                          TollFreeIcon(),
+                          SizedBox(width: 16.0),
+                          Text('0800399999'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: InkWell(
+                    onTap: () {
+                      _launchPhoneDialer('0800250007');
+                    },
+                    child: SizedBox(
+                      height: 35.0,
+                      child: Row(
+                        children: [
+                          TollFreeIcon(),
+                          SizedBox(width: 16.0),
+                          Text('0800250007'),
                         ],
                       ),
                     ),
@@ -187,43 +250,89 @@ class _ContactUsState extends State<ContactUs>{
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: (){
-                          launch('https://www.facebook.com/BRACUgandaBank/?mibextid=LQQJ4d');
+                        onTap: () {
+                          launchUrl(
+                              Uri.parse('https://wa.me/256707737488'),
+                              mode: LaunchMode.externalApplication,
+                            webViewConfiguration: const WebViewConfiguration(
+                              enableJavaScript: false,
+                            )
+                          );
                         },
-                        child:Image.asset('assets/images/fb_circled_.png',
+                        child: Image.asset(
+                          'assets/images/whatsapp.png',
                           alignment: Alignment.center,
                           height: 40,
-                          width: 40,),
+                          width: 40,
+                        ),
                       ),
                       const SizedBox(width: 8.0),
                       GestureDetector(
-                        onTap: (){
-                          launch('https://instagram.com/bracugandabank?igshid=YmMyMTA2M2Y=');
+                        onTap: () {
+                          launchUrl(
+                              Uri.parse('https://www.facebook.com/BRACUgandaBank/?mibextid=LQQJ4d'),
+                              mode: LaunchMode.externalApplication,
+                              webViewConfiguration: const WebViewConfiguration(
+                                enableJavaScript: false,
+                              ));
                         },
-                        child:Image.asset('assets/images/insta.png',
+                        child: Image.asset(
+                          'assets/images/fb_circled_.png',
                           alignment: Alignment.center,
                           height: 40,
-                          width: 40,),
+                          width: 40,
+                        ),
                       ),
                       const SizedBox(width: 8.0),
                       GestureDetector(
-                        onTap: (){
-                          launch('https://www.linkedin.com/company/brac-uganda-bank-ltd/');
+                        onTap: () {
+                          launchUrl(
+                              Uri.parse('https://instagram.com/bracugandabank?igshid=YmMyMTA2M2Y='),
+                              mode: LaunchMode.externalApplication,
+                              webViewConfiguration: const WebViewConfiguration(
+                                enableJavaScript: false,
+                              ));
                         },
-                        child:Image.asset('assets/images/linked_in_circled.png',
+                        child: Image.asset(
+                          'assets/images/insta.png',
                           alignment: Alignment.center,
                           height: 40,
-                          width: 40,),
+                          width: 40,
+                        ),
                       ),
                       const SizedBox(width: 8.0),
                       GestureDetector(
-                        onTap: (){
-                          launch('https://www.bracugandabankltd.com');
+                        onTap: () {
+                          launchUrl(
+                              Uri.parse('https://www.linkedin.com/company/brac-uganda-bank-ltd/'),
+                              mode: LaunchMode.externalApplication,
+                              webViewConfiguration: const WebViewConfiguration(
+                                enableJavaScript: false,
+                              ));
                         },
-                        child:Image.asset('assets/images/website.png',
+                        child: Image.asset(
+                          'assets/images/linked_in_circled.png',
                           alignment: Alignment.center,
                           height: 40,
-                          width: 40,),
+                          width: 40,
+                        ),
+                      ),
+                      const SizedBox(width: 8.0),
+                      GestureDetector(
+                        onTap: () {
+                          launchUrl(
+                              Uri.parse('https://www.bracugandabankltd.com'),
+                              mode: LaunchMode.externalApplication,
+                              webViewConfiguration: const WebViewConfiguration(
+                                enableJavaScript: false,
+                              ));
+                        },
+                        child: Image.asset(
+                          'assets/images/website.png',
+                          alignment: Alignment.center,
+                          height: 40,
+                          width: 40,
+                        ),
                       ),
                     ],
                   ),
@@ -242,8 +351,15 @@ class _ContactUsState extends State<ContactUs>{
 
 _launchPhoneDialer(String phoneNumber) async {
   final url = 'tel:$phoneNumber';
-  if (await canLaunch(url)) {
-    await launch(url);
+  final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+  if (await canLaunchUrl(phoneUri)) {
+    // await launch(url);
+    await launchUrl(
+        phoneUri,
+        mode: LaunchMode.externalApplication,
+        webViewConfiguration: const WebViewConfiguration(
+          enableJavaScript: false,
+        ));
   } else {
     throw 'Could not launch $url';
   }
@@ -254,10 +370,52 @@ _launchEmail(String emailAddress) async {
     scheme: 'mailto',
     path: emailAddress,
   );
-  String emailLaunchUri = _emailLaunchUri.toString();
-  if (await canLaunch(emailLaunchUri)) {
-    await launch(emailLaunchUri);
-  } else {
-    throw 'Could not launch $emailLaunchUri';
+  await launchUrl(_emailLaunchUri);
+  // String emailLaunchUri = _emailLaunchUri.toString();
+  // if (await canLaunchUrl(_emailLaunchUri)) {
+  //   await launchUrl(_emailLaunchUri);
+  // } else {
+  //   throw 'Could not launch $emailLaunchUri';
+  // }
+}
+
+class TollFreeIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          child: Image.asset(
+            'assets/images/landline.png',
+            height: 30,
+            width: 30,
+          ),
+        ),
+        Positioned(
+          right: 0,
+          top: 0,
+          child: Container(
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            constraints: const BoxConstraints(
+              minWidth: 26,
+              minHeight: 12,
+            ),
+            child: const Text(
+              'Toll Free',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 6,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

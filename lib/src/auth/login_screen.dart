@@ -4,6 +4,7 @@ import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 import '../home/app_drawer.dart';
 import '../other/base_screen.dart';
 import '../other/common_widget.dart';
@@ -21,12 +22,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final _pinController = TextEditingController();
   final _moduleRepository = ModuleRepository();
   final _sharedPref = CommonSharedPref();
+  // final _noScreenshot = NoScreenshot.instance;
 
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    // _noScreenshot.screenshotOff();
     SessionRepository().startSession();
   }
 

@@ -1,6 +1,7 @@
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// ////import 'package:no_screenshot/no_screenshot.dart';
 import '../other/base_screen.dart';
 import '../other/common_widget.dart';
 import 'otp_screen.dart';
@@ -17,8 +18,16 @@ class _ActivationScreenState extends State<ActivationScreen> {
   final _authRepo = AuthRepository();
   final _phoneController = TextEditingController();
   final _pinController = TextEditingController();
+  // final _noScreenshot = NoScreenshot.instance;
 
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // _noScreenshot.screenshotOff();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(

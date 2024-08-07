@@ -1,6 +1,7 @@
 import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 
 import 'common_widget.dart';
 
@@ -144,6 +145,8 @@ class _BranchPageState extends State<Branches> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    // final _noScreenshot = NoScreenshot.instance;
+    // _noScreenshot.screenshotOff();
 
     return Scaffold(
       body: Container(

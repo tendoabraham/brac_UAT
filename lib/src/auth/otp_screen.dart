@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+////import 'package:no_screenshot/no_screenshot.dart';
 import 'package:sms_autofill/sms_autofill.dart';
 import 'package:vibration/vibration.dart';
 
@@ -25,6 +26,7 @@ class _OTPVerificationState extends State<OTPVerification> with CodeAutoFill {
   bool isLoading = false;
   String? appSignature;
   String? otpCode;
+  // final _noScreenshot = NoScreenshot.instance;
 
   @override
   void codeUpdated() {
@@ -36,6 +38,7 @@ class _OTPVerificationState extends State<OTPVerification> with CodeAutoFill {
   @override
   void initState() {
     super.initState();
+    // _noScreenshot.screenshotOff();
     listenForCode();
 
     SmsAutoFill().getAppSignature.then((signature) {

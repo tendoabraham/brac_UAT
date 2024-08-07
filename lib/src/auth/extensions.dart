@@ -29,7 +29,7 @@ extension LastCrDr on APIService{
       logger.d("\n\nLAST-CRDR RESPONSE: $decrypted");
       lastCrDrResponse = LastCrDrResponse.fromJson(decrypted);
     } catch (e) {
-      AppLogger.appLogE(tag: "DECODE:ERROR", message: e.toString());
+      // AppLogger.appLogE(tag: "DECODE:ERROR", message: e.toString());
     }
     return lastCrDrResponse ?? LastCrDrResponse(status: "XXX");
   }
@@ -61,7 +61,7 @@ extension ministatement on APIService{
 
       dynamicResponse = DynamicResponse.fromJson(decrypted);
     } catch (e) {
-      AppLogger.appLogE(tag: "DECODE:ERROR", message: e.toString());
+      // AppLogger.appLogE(tag: "DECODE:ERROR", message: e.toString());
     }
     return dynamicResponse ?? DynamicResponse(status: "XXX");
   }
@@ -91,7 +91,7 @@ extension BillerTypes on APIService{
       logger.d("GETBillers response : $res");
     } catch (e) {
       CommonUtils.showToast("Biller names fetch failed");
-      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      // AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
 
@@ -123,7 +123,7 @@ extension BillerNames on APIService{
       logger.d("GETBillers response : $res");
     } catch (e) {
       CommonUtils.showToast("Biller names fetch failed");
-      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      // AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
 
@@ -162,7 +162,7 @@ extension SaveBeneficiary on APIService{
       logger.d("GETBillers response : $res");
     } catch (e) {
       CommonUtils.showToast("Biller names fetch failed");
-      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      // AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
 
@@ -198,7 +198,7 @@ extension GetDataFrequency on APIService{
       logger.d("GETDataFreq response : $res");
     } catch (e) {
       CommonUtils.showToast("Data Freq fetch failed");
-      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      // AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
 
@@ -238,7 +238,7 @@ extension GetDataBundles on APIService{
       logger.d("GETBundles response : $res");
     } catch (e) {
       CommonUtils.showToast("Bundles fetch failed");
-      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      // AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
 
@@ -277,7 +277,7 @@ extension validateData on APIService{
       logger.d("Validate Data response : $res");
     } catch (e) {
       CommonUtils.showToast("Data Number Validation failed");
-      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      // AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
 
@@ -321,7 +321,7 @@ extension payData on APIService{
       logger.d("Pay Data response : $res");
     } catch (e) {
       CommonUtils.showToast("Pay Data fetch failed");
-      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      // AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
       return dynamicResponse;
     }
 

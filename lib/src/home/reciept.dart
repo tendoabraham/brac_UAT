@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 
 import 'home_screen.dart';
 
@@ -19,6 +20,13 @@ class TrxReceipt extends StatefulWidget {
 }
 
 class _TrxReceiptState extends State<TrxReceipt> {
+  // final _noScreenshot = NoScreenshot.instance;
+
+  @override
+  void initState() {
+    // _noScreenshot.screenshotOff();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

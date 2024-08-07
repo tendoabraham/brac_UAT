@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 
 import '../other/numberFormatter.dart';
 import '../theme/app_theme.dart';
@@ -38,6 +39,13 @@ class _DataPurchaseState extends State<DataPurchase> {
   var bankAcc;
   final _pinController = TextEditingController();
   bool isObscured = true;
+  // final _noScreenshot = NoScreenshot.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    // _noScreenshot.screenshotOff();
+  }
 
   getBankAccounts() => _bankRepository.getAllBankAccounts();
 

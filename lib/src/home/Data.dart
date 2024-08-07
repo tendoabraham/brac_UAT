@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:contact_picker_platform_interface/contact_picker_platform_interface.dart';
 import 'package:fluttercontactpicker/src/interface.dart';
+////import 'package:no_screenshot/no_screenshot.dart';
 
 import '../theme/app_theme.dart';
 
@@ -38,9 +39,11 @@ class _DataState extends State<Data> {
   var _currentValue;
   bool isBenSelected = true;
   var selectedBeneficiary;
+  // final _noScreenshot = NoScreenshot.instance;
 
   @override
   void initState() {
+    // _noScreenshot.screenshotOff();
     getDataFreqs();
     super.initState();
   }

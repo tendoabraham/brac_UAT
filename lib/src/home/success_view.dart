@@ -2,6 +2,7 @@ import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 
 import '../home/home_screen.dart';
 import '../theme/app_theme.dart';
@@ -16,6 +17,13 @@ class SuccessView extends StatefulWidget {
 }
 
 class _SuccessViewState extends State<SuccessView> {
+  // final _noScreenshot = NoScreenshot.instance;
+
+  @override
+  void initState() {
+    // _noScreenshot.screenshotOff();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(

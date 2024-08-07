@@ -3,6 +3,7 @@ import 'package:brac_mobile/src/theme/app_theme.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+//import 'package:no_screenshot/no_screenshot.dart';
 
 import '../other/base_screen.dart';
 import '../other/common_widget.dart';
@@ -24,10 +25,12 @@ class _MiniStatementScreenState extends State<MiniStatementScreen> {
   var _currentValue, ministatement;
   bool querySuccess = false;
   bool showTransactionList = false;
+  // final _noScreenshot = NoScreenshot.instance;
 
   @override
   void initState() {
     super.initState();
+    // _noScreenshot.screenshotOff();
     _currentValue = widget.accounts;
     checkMiniStatement(_currentValue);
   }
